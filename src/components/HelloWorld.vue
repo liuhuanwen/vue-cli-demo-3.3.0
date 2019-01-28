@@ -110,6 +110,7 @@
           display: inline-block;
           border: 1px solid #999;
           border-radius: 8px;
+          font-size: 28px;
         }
       }
       .tips {
@@ -140,6 +141,9 @@
       display: flex;
       justify-content: space-between;
       color: #175199;
+      a {
+        font-size: 32px;
+      }
     }
     .third-login {
       position: absolute;
@@ -151,6 +155,7 @@
       color: #175199;
       a {
         margin-top: 32px;
+        font-size: 32px;
       }
     }
   }
