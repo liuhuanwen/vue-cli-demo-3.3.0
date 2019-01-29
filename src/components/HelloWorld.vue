@@ -18,7 +18,7 @@
       </div>
       <div class="tips">
         未注册手机验证后自动登录<br>
-        注册即同意<a href="javascript:">《知乎协议》</a><a href="javascript:">《隐私保护指引》</a>
+        注册即同意<a href="javascript:">《知乎协议》</a>&nbsp;<a href="javascript:">《隐私保护指引》</a>
       </div>
       <button class="login-btn">登录</button>
     </form>
@@ -41,6 +41,9 @@
 
 <style lang="scss" scoped>
   .container {
+    height: 1334px;
+    min-height: 100vh;
+    position: relative;
     .header {
       width: 750px;
       height: 216px;
@@ -71,8 +74,8 @@
         line-height: 100px;
         border-bottom: 1px solid #EBEBEB;
         span {
-          height: 50px;
-          line-height: 50px;
+          height: 36px;
+          line-height: 36px;
           display: inline-block;
           text-align: center;
           width: 160px;
@@ -83,11 +86,12 @@
         }
         input {
           width: 526px;
-          height: 60px;
-          line-height: 60px;
+          height: 36px;
+          line-height: 36px;
           padding-left: 32px;
           font-size: 32px;
           box-sizing: border-box;
+          vertical-align: middle;
         }
       }
       .form-item {
@@ -120,7 +124,7 @@
         a {
           font-size: 24px;
           color: #999;
-          text-decoration-color: #999;
+          text-decoration: #999 underline;
         }
       }
       .login-btn {
