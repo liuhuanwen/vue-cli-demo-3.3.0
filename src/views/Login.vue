@@ -3,27 +3,34 @@
     <img class="img-logo" src="../assets/ele_logo.png" alt="logo">
     <form class="form">
       <div class="input-wrap">
-        <input class="input-phone" type="tel" maxlength="11" placeholder="手机号"/>
+        <input class="input-phone" v-model="username" type="text" placeholder="手机号"/>
         <button class="btn-code">获取验证码</button>
       </div>
       <div class="input-wrap">
-        <input class="input-code" type="tel" maxlength="8" placeholder="验证码"/>
+        <input class="input-code" v-model="password"  type="text" placeholder="验证码"/>
       </div>
       <p class="p-protocol">新用户登录即自动注册，并表示已同意&nbsp;<a>《用户服务协议》</a></p>
-      <button class="btn-login">登录</button>
+      <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
-    <p class="p-about">关于我们</p>
+    <p class="p-about">关于我们{{totalNum}}</p>
   </div>
 </template>
 
 <script>
-  import {mapState, mapMutations, mapGetters} from 'vuex';
+  import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
     name: "Login",
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
     computed: {
       ...mapState([
-        'count'
+        'count',
+        'countryList'
       ]),
       ...mapGetters([
         'totalCount'
@@ -35,7 +42,17 @@
     methods: {
       ...mapMutations([
         'INCREMENT'
-      ])
+      ]),
+      ...mapActions([
+        'getAllCountryList',
+        'login'
+      ]),
+      handleLogin() {
+        this.login({username: this.username, password: this.password});
+      }
+    },
+    mounted() {
+      this.getAllCountryList();
     }
   }
 </script>
