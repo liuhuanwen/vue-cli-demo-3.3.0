@@ -11,18 +11,22 @@
 </template>
 
 <script>
-  import {INCREMENT} from "../store/mutation-types";
+  import {mapState, mapMutations} from 'vuex';
+  import {INCREMENT} from '../store/mutation-types';
 
   export default {
     name: "Login",
     computed: {
-      count: function () {
-        return this.$store.state.count;
-      }
+      ...mapState([
+        "count"
+      ])
     },
     methods: {
+      ...mapMutations([
+        INCREMENT
+      ]),
       add() {
-        this.$store.commit(INCREMENT);
+        this.INCREMENT(1);
       }
     }
   }
