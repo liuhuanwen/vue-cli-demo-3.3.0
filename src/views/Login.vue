@@ -17,14 +17,20 @@
 </template>
 
 <script>
-  import {mapState, mapMutations} from 'vuex';
+  import {mapState, mapMutations, mapGetters} from 'vuex';
 
   export default {
     name: "Login",
     computed: {
       ...mapState([
         'count'
-      ])
+      ]),
+      ...mapGetters([
+        'totalCount'
+      ]),
+      totalNum: function () {
+        return this.totalCount(10);
+      }
     },
     methods: {
       ...mapMutations([

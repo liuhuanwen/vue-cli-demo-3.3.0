@@ -15,5 +15,8 @@ export default new Vuex.Store({
   },
   actions: {
 
+  },
+  getters: {
+    totalCount: state => outerNum => (state.count + outerNum)
   }
 })
