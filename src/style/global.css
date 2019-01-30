@@ -1,5 +1,5 @@
 /*css 初始化 */
-body, dl, dd, ul, ol, h1, h2, h3, h4, h5, h6, pre, form, input, textarea, p, hr, thead, tbody, tfoot, th, td {
+body, dl, dd, ul, ol, h1, h2, h3, h4, h5, h6, pre, form, input, textarea, p, hr, thead, tbody, tfoot, th, td, button {
   margin: 0;
   padding: 0;
 }
@@ -90,6 +90,10 @@ input[type="search"] {
 }
 
 input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+input {
   -webkit-appearance: none;
 }
 
