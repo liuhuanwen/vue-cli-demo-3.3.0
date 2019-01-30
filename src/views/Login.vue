@@ -7,7 +7,7 @@
         <button class="btn-code">获取验证码</button>
       </div>
       <div class="input-wrap">
-        <input class="input-code" type="number" maxlength="8" placeholder="验证码"/>
+        <input class="input-code" type="tel" maxlength="8" placeholder="验证码"/>
       </div>
       <p class="p-protocol">新用户登录即自动注册，并表示已同意&nbsp;<a>《用户服务协议》</a></p>
       <button class="btn-login">登录</button>
