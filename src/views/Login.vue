@@ -48,7 +48,10 @@
         'login'
       ]),
       handleLogin() {
-        this.login({username: this.username, password: this.password});
+        this.login({username: this.username, password: this.password})
+          .catch(error => {
+            console.log(error.message);
+        });
       }
     },
     mounted() {
@@ -99,7 +102,6 @@
       font-size: 28px;
       text-align: left;
       color: #999;
-
       a {
         color: #0089dc;
       }

@@ -35,8 +35,13 @@ export default new Vuex.Store({
   },
   actions: {
     async getAllCountryList({commit}) {
-      let res = await getAllCountryList();
-      commit(GET_ALL_COUNTRY_LIST, res);
+      try {
+        let res = await getAllCountryList();
+        commit(GET_ALL_COUNTRY_LIST, res);
+      } catch (error) {
+        throw error;
+      }
+
     },
     async login({commit}, {username, password}) {
       let res = await login(username, password);
