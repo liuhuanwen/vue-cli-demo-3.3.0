@@ -2,14 +2,14 @@ import axios from 'axios';
 import qs from 'qs';
 
 function get(options) {
-  return promise(options, 'get');
+  return createPromise(options, 'get');
 }
 
 function post(options) {
-  return promise(options, 'post');
+  return createPromise(options, 'post');
 }
 
-const promise = (options, method) => {
+const createPromise = (options, method) => {
   return new Promise((resolve, reject) => {
     options.data = qs.stringify(options.data);
     axios.create({
