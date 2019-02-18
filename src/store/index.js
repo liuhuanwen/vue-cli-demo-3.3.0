@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {INCREMENT, GET_ALL_COUNTRY_LIST, GET_LOGIN_INFO} from "./mutation-types";
 import {getAllCountryList} from '../api/itopApi';
-import {login} from "../api/userCenterApi";
+import {login} from "../api/userApi";
 
 Vue.use(Vuex);
 

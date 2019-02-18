@@ -1,62 +1,69 @@
 import axios from 'axios';
 import qs from 'qs';
+import {BASE_URL} from '../config/env';
 
-function get(options) {
-  return createPromise(options, 'get');
-}
+const instance = axios.create();
+instance.defaults.baseURL = BASE_URL;
+instance.defaults.timeout = 30 * 1000;
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+instance.interceptors.response.use(
+  res => {
+    return res.data;
+  },
+  err => {
+    if (err && err.response) {
+      switch (err.response) {
+        case 403:
+          err.message = '拒绝访问';
+          break;
+        case 404:
+          err.message = `请求${err.response.config.url
+            .split('/')
+            .pop()
+            .replace(/\.html/, '')}接口出错`;
+          break;
+        case 408:
+          err.message = '请求超时';
+          break;
+        case 500:
+          err.message = '服务器内部错误';
+          break;
+        case 501:
+          err.message = '服务未实现';
+          break;
+        case 502:
+          err.message = '网关错误';
+          break;
+        case 503:
+          err.message = '服务不可用';
+          break;
+        case 504:
+          err.message = '网关超时';
+          break;
+        case 505:
+          err.message = 'HTTP版本不受支持';
+          break;
+      }
+    }
+  }
+);
 
-function post(options) {
-  return createPromise(options, 'post');
-}
-
-const createPromise = (options, method) => {
-  return new Promise((resolve, reject) => {
-    options.data = qs.stringify(options.data);
-    axios.create({
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      timeout: 30 * 1000,
-      method: method
-    })(options)
-      .then(response => {
-        switch (response.data.s) {
-          case '0':
-          case '1001':
-            resolve(response.data.c);
-            break;
-          case '-100':
-            window.location.href = '/';
-            reject(new Error('登录过期'));
-            break;
-          case '-101':
-            reject(new Error('没有权限访问，请检查后重试'));
-            break;
-          case '-110':
-            reject(new Error('参数错误，请检查后重试'));
-            break;
-          case '-111':
-            reject(new Error('网络异常，请检查后重试'));
-            break;
-          case '-112':
-            reject(new Error('系统异常，请检查后重试'));
-            break;
-          default:
-            if (response.data.m) {
-              reject(new Error(response.data.m));
-            } else {
-              reject(new Error('请求失败'));
-            }
-            break;
+export function ajax(url, params, type = 'post') {
+  let config = {method: type};
+  if (type === 'get') {
+    config.params = params;
+  } else if (type === 'put' || type === 'patch' || type === 'delete') {
+    config.data = type ? {} : params;
+    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    config.transformRequest = [() => {
+        let ret = new URLSearchParams();
+        for (let [key, value] in params) {
+          ret.append(key, value)
         }
-      })
-      .catch(() => {
-        reject(new Error('系统异常，请检查后重试'));
-      });
-  });
-};
+        return ret
+      }
+    ]
+  } else {
 
-export {
-  get,
-  post
-};
+  }
+}

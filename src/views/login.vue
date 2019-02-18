@@ -1,10 +1,12 @@
 <template>
   <div>
-    <img class="img-logo" src="../assets/ele_logo.png" alt="logo">
+    <svg class="logo">
+      <use xlink:href="#ele-logo"></use>
+    </svg>
     <form class="form">
       <div class="input-wrap">
-        <input class="input-phone" v-model="username" type="text" placeholder="手机号"/>
-        <button class="btn-code">获取验证码</button>
+        <input class="input-phone" v-model="mobile" type="text" placeholder="手机号"/>
+        <button class="btn-code" @click="handleGetMobileCode()">获取验证码</button>
       </div>
       <div class="input-wrap">
         <input class="input-code" v-model="password"  type="text" placeholder="验证码"/>
@@ -12,18 +14,19 @@
       <p class="p-protocol">新用户登录即自动注册，并表示已同意&nbsp;<a>《用户服务协议》</a></p>
       <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
-    <p class="p-about">关于我们{{totalNum}}</p>
+    <p class="p-about">关于我们</p>
   </div>
 </template>
 
 <script>
   import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
+  import * as userApi from "../api/userApi";
 
   export default {
     name: "login",
     data() {
       return {
-        username: '',
+        mobile: '',
         password: ''
       }
     },
@@ -48,21 +51,29 @@
         'login'
       ]),
       handleLogin() {
-        this.login({username: this.username, password: this.password})
-          .catch(error => {
-            console.log(error.message);
-        });
+      },
+      async handleGetMobileCode() {
+        try {
+          const res = await userApi.sendMobileCode(this.mobile);
+        } catch (error) {
+          if (error.response && error.response.status === 400) {
+            if (error.response.data.name === 'NEED_CAPTCHA') {
+              console.log('需要图形验证码');
+            }
+          }
+        }
       }
     },
     mounted() {
-      this.getAllCountryList();
+      // this.getAllCountryList();
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .img-logo {
+  .logo {
     width: 280px;
+    height: 112px;
     margin-top: 80px;
   }
 

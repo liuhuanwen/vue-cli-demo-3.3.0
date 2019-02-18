@@ -1,13 +1,13 @@
 module.exports = {
   devServer: {
     proxy:{
-      '/api': {
-        target: 'http://www.itop.com',
+      '/restapi': {
+        target: 'https://h5.ele.me',
         ws: true,
         changeOrigin: true,
-        pathRewrite: {
-          '/api': '/'
-        }
+        // pathRewrite: {
+        //   '/restapi': '/'
+        // }
       }
     }
   }
