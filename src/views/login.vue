@@ -20,7 +20,7 @@
   import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
-    name: "Login",
+    name: "login",
     data() {
       return {
         username: '',

@@ -35,7 +35,7 @@
 
 <script>
   export default {
-    name: 'HelloWorld',
+    name: 'helloWorld',
   }
 </script>
 

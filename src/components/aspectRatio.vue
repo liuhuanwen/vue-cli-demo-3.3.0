@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: "AspectRatio"
+    name: "aspectRatio"
   }
 </script>
 
