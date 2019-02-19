@@ -12,7 +12,7 @@ instance.interceptors.response.use(
   },
   err => {
     if (err && err.response) {
-      switch (err.response) {
+      switch (err.response.status) {
         case 400:
           if (err.response.data.message) {
             err.message = err.response.data.message;
