@@ -14,8 +14,7 @@ export default new Vuex.Store({
     toast: {
       message: '',
       isShow: false
-    },
-    validateToken: ''
+    }
   },
   mutations: {
     [INCREMENT](state, num) {
