@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {INCREMENT, SAVE_MOBILE, SHOW_CAPTCHA, HIDE_CAPTCHA, GET_LOGIN_INFO} from "./mutation-types";
+import {INCREMENT, SAVE_MOBILE, SHOW_CAPTCHA, HIDE_CAPTCHA, GET_LOGIN_INFO, SHOW_TOAST} from "./mutation-types";
 import {login} from "../api/userApi";
 
 Vue.use(Vuex);
@@ -11,7 +11,11 @@ export default new Vuex.Store({
     user: {
       mobile: ''
     },
-    isShowCaptcha: false
+    isShowCaptcha: false,
+    toast: {
+      message: '',
+      isShow: false
+    }
   },
   mutations: {
     [INCREMENT](state, num) {
@@ -28,6 +32,12 @@ export default new Vuex.Store({
     [HIDE_CAPTCHA](state) {
       state.isShowCaptcha = false;
     },
+    [SHOW_TOAST](state, message) {
+      state.toast = {message: message, isShow: true};
+      setTimeout(() => {
+        state.toast = {message: '', isShow: false};
+      }, 2000)
+    }
   },
   actions: {
     async login({commit}, {username, password}) {

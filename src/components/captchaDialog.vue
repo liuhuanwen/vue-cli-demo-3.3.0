@@ -19,7 +19,6 @@
   import {mapState, mapMutations} from 'vuex';
 
   export default {
-    name: "captchaDialog",
     data() {
       return {
         captchaValue: '',

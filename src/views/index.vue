@@ -11,7 +11,6 @@
   import toast from '../components/toast';
 
   export default {
-    name: "index",
     components: {
       toast,
       svgIcon

@@ -15,17 +15,16 @@
       <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
     <p class="p-about">关于我们</p>
-    <captchas-dialog></captchas-dialog>
+    <captcha-dialog></captcha-dialog>
   </div>
 </template>
 
 <script>
   import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
   import * as userApi from "../api/userApi";
-  import captchasDialog from '../components/captchaDialog';
+  import captchaDialog from '../components/captchaDialog';
 
   export default {
-    name: "login",
     data() {
       return {
         mobile: '',
@@ -34,7 +33,7 @@
       }
     },
     components: {
-      captchasDialog
+      captchaDialog
     },
     computed: {
       ...mapState([
@@ -51,12 +50,14 @@
       ...mapMutations([
         'INCREMENT',
         'SAVE_MOBILE',
-        'SHOW_CAPTCHA'
+        'SHOW_CAPTCHA',
+        'SHOW_TOAST'
       ]),
       ...mapActions([
         'login'
       ]),
       handleLogin() {
+        this.SHOW_TOAST('请输入手机号码');
       },
       async handleGetMobileCode() {
         this.SAVE_MOBILE(this.mobile);
