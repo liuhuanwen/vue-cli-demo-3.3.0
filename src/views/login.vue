@@ -6,7 +6,7 @@
     <form class="form">
       <div class="input-wrap">
         <input class="input-phone" v-model="mobile" type="text" placeholder="手机号"/>
-        <button class="btn-code" @click="handleGetMobileCode()">获取验证码</button>
+        <button class="btn-code" :class="{btn_disabled: !rightMobile}" @click="handleGetMobileCode()" :disabled="!rightMobile">{{btnText}}</button>
       </div>
       <div class="input-wrap">
         <input class="input-code" v-model="password"  type="text" placeholder="验证码"/>
@@ -15,57 +15,61 @@
       <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
     <p class="p-about">关于我们</p>
+    <captchas-dialog></captchas-dialog>
   </div>
 </template>
 
 <script>
   import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
   import * as userApi from "../api/userApi";
+  import captchasDialog from '../components/captchaDialog';
 
   export default {
     name: "login",
     data() {
       return {
         mobile: '',
-        password: ''
+        password: '',
+        btnText: '获取验证码'
       }
+    },
+    components: {
+      captchasDialog
     },
     computed: {
       ...mapState([
-        'count',
-        'countryList'
+        'count'
       ]),
       ...mapGetters([
         'totalCount'
       ]),
-      totalNum: function () {
-        return this.totalCount(10);
+      rightMobile: function() {
+        return /^1\d{10}$/gi.test(this.mobile);
       }
     },
     methods: {
       ...mapMutations([
-        'INCREMENT'
+        'INCREMENT',
+        'SAVE_MOBILE',
+        'SHOW_CAPTCHA'
       ]),
       ...mapActions([
-        'getAllCountryList',
         'login'
       ]),
       handleLogin() {
       },
       async handleGetMobileCode() {
+        this.SAVE_MOBILE(this.mobile);
         try {
-          const res = await userApi.sendMobileCode(this.mobile);
-        } catch (error) {
-          if (error.response && error.response.status === 400) {
-            if (error.response.data.name === 'NEED_CAPTCHA') {
-              console.log('需要图形验证码');
+          const data = await userApi.sendMobileCode(this.mobile);
+        } catch (err) {
+          if (err.response && err.response.status === 400) {
+            if (err.response.data.name === 'NEED_CAPTCHA') {
+              this.SHOW_CAPTCHA();
             }
           }
         }
       }
-    },
-    mounted() {
-      // this.getAllCountryList();
     }
   }
 </script>
@@ -104,8 +108,12 @@
         background-color: transparent;
         right: 20px;
         height: 98px;
-        color: #999;
+        color: #0089dc;
         font-size: 28px;
+      }
+
+      .btn_disabled {
+        color: #999;
       }
     }
 

@@ -8,11 +8,18 @@ instance.defaults.timeout = 30 * 1000;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 instance.interceptors.response.use(
   res => {
-    return res.data;
+    return res;
   },
   err => {
     if (err && err.response) {
       switch (err.response) {
+        case 400:
+          if (err.response.data.message) {
+            err.message = err.response.data.message;
+          } else {
+            err.message = '系统异常';
+          }
+          break;
         case 403:
           err.message = '拒绝访问';
           break;
@@ -43,8 +50,11 @@ instance.interceptors.response.use(
         case 505:
           err.message = 'HTTP版本不受支持';
           break;
+        default:
+          err.message = '系统异常';
       }
     }
+    return Promise.reject(err);
   }
 );
 
@@ -52,18 +62,11 @@ export function ajax(url, params, type = 'post') {
   let config = {method: type};
   if (type === 'get') {
     config.params = params;
-  } else if (type === 'put' || type === 'patch' || type === 'delete') {
-    config.data = type ? {} : params;
-    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    config.transformRequest = [() => {
-        let ret = new URLSearchParams();
-        for (let [key, value] in params) {
-          ret.append(key, value)
-        }
-        return ret
-      }
-    ]
   } else {
-
+    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    config.data = qs.stringify(params);
   }
+  return instance(url, config).then(res => {
+    return res.data;
+  })
 }
