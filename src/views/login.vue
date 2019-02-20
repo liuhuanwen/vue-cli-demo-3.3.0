@@ -15,19 +15,21 @@
       <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
     <p class="p-about">关于我们</p>
-    <div class="captcha-wrapper" v-if="isShowCaptcha">
-      <div class="captcha">
-        <h1 class="title">请填写图形验证码</h1>
-        <div class="input-wrapper">
-          <input type="text" v-model="captchaValue"/>
-          <img :src="captcha.captchaImage" @click="handleGetCaptcha()" alt="图形验证码"/>
-        </div>
-        <div class="btn-wrapper">
-          <button class="cancel" @click="handleCancel()">取消</button>
-          <button class="ok" @click="handleOk()">确定</button>
+    <transition name="fade">
+      <div class="captcha-wrapper" v-if="isShowCaptcha">
+        <div class="captcha">
+          <h1 class="title">请填写图形验证码</h1>
+          <div class="input-wrapper">
+            <input type="text" v-model="captchaValue"/>
+            <img :src="captcha.captchaImage" @click="handleGetCaptcha()" alt="图形验证码"/>
+          </div>
+          <div class="btn-wrapper">
+            <button class="cancel" @click="handleCancel()">取消</button>
+            <button class="ok" @click="handleOk()">确定</button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
