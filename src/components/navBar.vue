@@ -58,6 +58,7 @@
   .nav {
     height: 100px;
     border-top: 2px solid #eee;
+    background-color: #fff;
     .nav-item {
       display: inline-block;
       width: 25%;
