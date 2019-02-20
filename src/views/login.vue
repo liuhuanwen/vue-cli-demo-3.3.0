@@ -261,6 +261,7 @@
           position: absolute;
           right: 20px;
           height: 70px;
+          top: 5px;
         }
       }
 
