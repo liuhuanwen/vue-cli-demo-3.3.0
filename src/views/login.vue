@@ -14,7 +14,7 @@
       <p class="p-protocol">新用户登录即自动注册，并表示已同意&nbsp;<a>《用户服务协议》</a></p>
       <button class="btn-login" @click="handleLogin()">登录</button>
     </form>
-    <p class="p-about">关于我们</p>
+    <router-link class="about" to="about">关于我们</router-link>
     <transition name="fade">
       <div class="captcha-wrapper" v-if="isShowCaptcha">
         <div class="captcha">
@@ -160,7 +160,7 @@
 
   .form {
     width: 600px;
-    margin: 32px auto 0 auto;
+    margin: 32px auto 40px auto;
 
     .input-wrap {
       position: relative;
@@ -214,8 +214,7 @@
     }
   }
 
-  .p-about {
-    margin-top: 40px;
+  .about {
     font-size: 24px;
     color: #999;
   }
