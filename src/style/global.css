@@ -118,7 +118,7 @@ body {
   background: #fff;
 }
 
-button, input, textarea {
+button, input, textarea, a, div {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
