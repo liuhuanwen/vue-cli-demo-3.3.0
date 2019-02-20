@@ -1,15 +1,15 @@
 <template>
   <div>
-    <navigation title="关于我们"></navigation>
+    <title-bar title="关于我们"></title-bar>
   </div>
 </template>
 
 <script>
-  import navigation from '../components/navigation';
+  import titleBar from '../components/titleBar';
 
   export default {
     components: {
-      navigation
+      titleBar
     }
   }
 
