@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '../views/index'
+import container from '../views/container'
 
 Vue.use(Router);
 
@@ -8,11 +8,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: index,
+      component: container,
       children: [
         {
           path: '/login',
           component: () => import(/* webpackChunkName: "login" */ '../views/login.vue')
+        },
+        {
+          path: '/home',
+          component: () => import(/* webpackChunkName: "home" */ '../views/home.vue'),
+          children: [
+            {
+              path: '/index',
+              component: () => import(/* webpackChunkName: "index" */ '../views/index/index.vue'),
+            },
+            {
+              path: '/discovery',
+              component: () => import(/* webpackChunkName: "discovery" */ '../views/discovery/discovery.vue'),
+            },
+            {
+              path: '/order',
+              component: () => import(/* webpackChunkName: "order" */ '../views/order/order.vue'),
+            },
+            {
+              path: '/mine',
+              component: () => import(/* webpackChunkName: "mine" */ '../views/mine/mine.vue'),
+            }
+          ]
         },
         {
           path: '/aspect',
