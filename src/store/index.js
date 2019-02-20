@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {INCREMENT, GET_LOGIN_INFO, SHOW_TOAST} from "./mutation-types";
+import {INCREMENT, GET_LOGIN_INFO, SHOW_TOAST, SAVE_USER_ID} from "./mutation-types";
 import {login} from "../api/userApi";
 
 Vue.use(Vuex);
@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     count: 0,
     user: {
-      mobile: ''
+      mobile: '',
+      userId: ''
     },
     toast: {
       message: '',
@@ -25,6 +26,9 @@ export default new Vuex.Store({
       setTimeout(() => {
         state.toast = {message: '', isShow: false};
       }, 2000)
+    },
+    [SAVE_USER_ID](state, userId) {
+      state.user.userId = userId;
     }
   },
   actions: {

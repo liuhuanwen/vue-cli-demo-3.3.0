@@ -68,6 +68,7 @@
       ...mapMutations([
         'INCREMENT',
         'SHOW_TOAST',
+        'SAVE_USER_ID'
       ]),
       ...mapActions([
         'login'
@@ -129,8 +130,8 @@
           return;
         }
         try {
-          await userApi.login(this.mobile, this.validateToken, this.validateCode);
-          this.SHOW_TOAST('登录成功');
+          const data = await userApi.login(this.mobile, this.validateToken, this.validateCode);
+          this.SAVE_USER_ID(data.user_id);
         } catch (err) {
           this.SHOW_TOAST('登录失败');
         }
