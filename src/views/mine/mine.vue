@@ -13,24 +13,30 @@
           <span>&nbsp;登录后享受更多特权</span>
         </p>
       </div>
-      <svg class="arrow">
+      <svg fill="#fff" class="arrow">
         <use xlink:href="#icon-arrow-right"></use>
       </svg>
     </div>
     <div class="body">
       <section>
         <a class="red-packet-wrapper">
-          <p>
+          <p v-if="false">
             <span class="count">8</span>
             <span class="unit">个</span>
           </p>
+          <svg v-if="true" fill="#ff5f3e" class="icon-red-packet">
+            <use xlink:href="#icon-red-packet"></use>
+          </svg>
           <p class="title">红包</p>
         </a>
         <a class="gold-wrapper">
-          <p>
+          <p v-if="false">
             <span class="count">141</span>
             <span class="unit">个</span>
           </p>
+          <svg v-if="true" fill="#6ac20b" class="icon-gold">
+            <use xlink:href="#icon-gold"></use>
+          </svg>
           <p class="title">金币</p>
         </a>
       </section>
@@ -40,9 +46,64 @@
             <use xlink:href="#icon-address"></use>
           </svg>
           <span class="item-title">我的地址</span>
-          <svg class="item-arrow">
-            <use></use>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
           </svg>
+          <div class="item-bottom-line item-bottom-line-hidden"></div>
+        </a>
+      </section>
+      <section class="item-wrapper">
+        <a class="item">
+          <svg class="item-icon">
+            <use xlink:href="#icon-gold-market"></use>
+          </svg>
+          <span class="item-title">金币商城</span>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
+          </svg>
+          <div class="item-bottom-line"></div>
+        </a>
+        <a class="item">
+          <svg class="item-icon">
+            <use xlink:href="#icon-share"></use>
+          </svg>
+          <span class="item-title">分享拿10元现金</span>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
+          </svg>
+          <div class="item-bottom-line item-bottom-line-hidden"></div>
+        </a>
+      </section>
+      <section class="item-wrapper">
+        <a class="item">
+          <svg class="item-icon">
+            <use xlink:href="#icon-service"></use>
+          </svg>
+          <span class="item-title">我的客服</span>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
+          </svg>
+          <div class="item-bottom-line"></div>
+        </a>
+        <a class="item">
+          <svg class="item-icon">
+            <use xlink:href="#icon-download"></use>
+          </svg>
+          <span class="item-title">下载饿了么APP</span>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
+          </svg>
+          <div class="item-bottom-line"></div>
+        </a>
+        <a class="item">
+          <svg class="item-icon">
+            <use xlink:href="#icon-rule"></use>
+          </svg>
+          <span class="item-title">规则中心</span>
+          <svg fill="#ccc" class="item-arrow">
+            <use xlink:href="#icon-arrow-right"></use>
+          </svg>
+          <div class="item-bottom-line item-bottom-line-hidden"></div>
         </a>
       </section>
     </div>
@@ -51,16 +112,12 @@
 
 <script>
   import avatarImg from '../../assets/avatar-default.png';
-  import svgIcon from '../../components/svgIcon';
 
   export default {
     data() {
       return {
         avatar: avatarImg
       }
-    },
-    components: {
-      svgIcon
     }
   }
 </script>
@@ -68,7 +125,7 @@
 <style lang="scss" scoped>
   .container {
     width: 750px;
-    height: 1334px;
+    height: 100vh;
     background-color: #f5f5f5;
 
     .header {
@@ -90,6 +147,7 @@
       }
 
       .profile-wrapper {
+        width: 500px;
         position: relative;
         color: #fff;
         left: 184px;
@@ -134,8 +192,13 @@
         border-right: 1px solid #eee;
         background-color: #fff;
 
+        .icon-red-packet {
+          width: 52px;
+          height: 52px;
+        }
+
         .count {
-          font-size: 48px;
+          font-size: 52px;
           font-weight: bold;
           color: rgb(255, 95, 62);
         }
@@ -156,8 +219,13 @@
         padding: 30px 0;
         background-color: #fff;
 
+        .icon-gold {
+          width: 52px;
+          height: 52px;
+        }
+
         .count {
-          font-size: 48px;
+          font-size: 52px;
           font-weight: bold;
           color: rgb(106, 194, 11);
         }
@@ -175,23 +243,53 @@
       .item-wrapper {
         margin-top: 20px;
         background-color: #fff;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
 
         .item {
           display: block;
+          position: relative;
           height: 88px;
-          line-height: 88px;
           text-align: left;
+
+
           .item-icon {
-            margin-left: 32px;
+            position: absolute;
+            left: 32px;
             width: 36px;
             height: 36px;
-            vertical-align: middle;
+            top: 50%;
+            transform: translateY(-50%);
           }
 
           .item-title {
-            line-height: 88px;
+            position: absolute;
             font-size: 32px;
-            margin-left: 20px;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          .item-arrow {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          .item-bottom-line {
+            position: absolute;
+            width: 660px;
+            height: 1px;
+            background-color: #eee;
+            bottom: 0;
+            left: 90px;
+          }
+
+          .item-bottom-line-hidden {
+            display: none;
           }
         }
       }
