@@ -132,8 +132,13 @@
         try {
           const data = await userApi.login(this.mobile, this.validateToken, this.validateCode);
           this.SAVE_USER_ID(data.user_id);
+          this.$router.push('mine');
         } catch (err) {
-          this.showToast('登录失败');
+          if (err.response && err.response.status === 400) {
+            this.showToast(err.message);
+          } else {
+            this.showToast('登录失败');
+          }
         }
       },
       handleCancel() {

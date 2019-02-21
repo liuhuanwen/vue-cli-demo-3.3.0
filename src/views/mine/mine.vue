@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="header">
+    <div class="header" @click="handleClickHeader()">
       <div class="avatar-wrapper">
         <img :src="avatar" alt="头像"/>
       </div>
@@ -112,12 +112,30 @@
 
 <script>
   import avatarImg from '../../assets/avatar-default.png';
+  import {mapState, mapActions} from 'vuex';
 
   export default {
     data() {
       return {
         avatar: avatarImg
       }
+    },
+    computed: {
+      ...mapState([
+        'user',
+        'userId'
+      ])
+    },
+    methods: {
+      ...mapActions([
+        'getUserInfo'
+      ]),
+      handleClickHeader() {
+        this.$router.push('login');
+      }
+    },
+    mounted() {
+      this.getUserInfo(this.userId);
     }
   }
 </script>

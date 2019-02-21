@@ -1,8 +1,9 @@
 import {
   GET_LOGIN_INFO,
-  CONTROL_TOAST
+  CONTROL_TOAST,
+  SAVE_USER_INFO
 } from "./mutationTypes";
-import {login} from "../api/userApi";
+import {login, getUserInfo} from "../api/userApi";
 
 export default {
   async login({commit}, {username, password}) {
@@ -14,5 +15,9 @@ export default {
     setTimeout(() => {
       commit(CONTROL_TOAST, '');
     }, 2000);
+  },
+  async getUserInfo({commit}, userId) {
+    let res = await getUserInfo(userId);
+    commit(SAVE_USER_INFO, res);
   }
 }

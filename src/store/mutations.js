@@ -1,7 +1,8 @@
 import {
   INCREMENT,
   CONTROL_TOAST,
-  SAVE_USER_ID
+  SAVE_USER_ID,
+  SAVE_USER_INFO
 } from "./mutationTypes";
 
 export default {
@@ -16,6 +17,9 @@ export default {
     }
   },
   [SAVE_USER_ID](state, userId) {
-    state.user.userId = userId;
+    state.userId = userId;
+  },
+  [SAVE_USER_INFO](state, user) {
+    state.user = user;
   }
 }

@@ -38,3 +38,10 @@ export function login(mobile, validateToken, validateCode) {
     }
   );
 }
+
+/**
+ * 获取用户信息
+ * */
+export function getUserInfo(userId) {
+  return http.ajax(`v3/users/${userId}`, {});
+}

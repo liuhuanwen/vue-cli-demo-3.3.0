@@ -6,6 +6,8 @@ const instance = axios.create();
 instance.defaults.baseURL = BASE_URL;
 instance.defaults.timeout = 30 * 1000;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+instance.defaults.withCredentials = true;
+
 instance.interceptors.response.use(
   res => {
     return res;
