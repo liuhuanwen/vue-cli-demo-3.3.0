@@ -1,6 +1,6 @@
 import {
   INCREMENT,
-  SHOW_TOAST,
+  CONTROL_TOAST,
   SAVE_USER_ID
 } from "./mutationTypes";
 
@@ -8,11 +8,12 @@ export default {
   [INCREMENT](state, num) {
     state.count = state.count + num;
   },
-  [SHOW_TOAST](state, message) {
-    state.toast = {message: message, isShow: true};
-    setTimeout(() => {
+  [CONTROL_TOAST](state, message) {
+    if (message && typeof message === 'string') {
+      state.toast = {message: message, isShow: true};
+    } else {
       state.toast = {message: '', isShow: false};
-    }, 2000)
+    }
   },
   [SAVE_USER_ID](state, userId) {
     state.user.userId = userId;

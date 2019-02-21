@@ -67,11 +67,11 @@
     methods: {
       ...mapMutations([
         'INCREMENT',
-        'SHOW_TOAST',
         'SAVE_USER_ID'
       ]),
       ...mapActions([
-        'login'
+        'login',
+        'showToast'
       ]),
       async handleGetMobileCode() {
         try {
@@ -87,10 +87,10 @@
               this.captchaValue = '';
               this.handleGetCaptcha();
             } else {
-              this.SHOW_TOAST(err.message);
+              this.showToast(err.message);
             }
           } else {
-            this.SHOW_TOAST('获取验证码失败');
+            this.showToast('获取验证码失败');
           }
         }
       },
@@ -100,7 +100,7 @@
           this.captcha.captchaHash = data.captcha_hash;
           this.captcha.captchaImage = data.captcha_image;
         } catch (err) {
-          this.SHOW_TOAST('获取图形验证码失败');
+          this.showToast('获取图形验证码失败');
         }
       },
       countDown() {
@@ -122,18 +122,18 @@
       },
       async handleLogin() {
         if (!this.mobile) {
-          this.SHOW_TOAST('手机号码不能为空');
+          this.showToast('手机号码不能为空');
           return;
         }
         if (!this.validateCode) {
-          this.SHOW_TOAST('验证码不能为空');
+          this.showToast('验证码不能为空');
           return;
         }
         try {
           const data = await userApi.login(this.mobile, this.validateToken, this.validateCode);
           this.SAVE_USER_ID(data.user_id);
         } catch (err) {
-          this.SHOW_TOAST('登录失败');
+          this.showToast('登录失败');
         }
       },
       handleCancel() {
