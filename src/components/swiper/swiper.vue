@@ -43,6 +43,7 @@
     methods: {
       handleMousedown(event, index) {
         let downX = event.clientX;
+        console.log(event);
         document.ontouchmove = (event) => {
           this.items[index].moveDistance = event.clientX - downX;
           console.log(this.items[index].moveDistance);
