@@ -19,12 +19,26 @@
         </div>
       </div>
     </div>
-    <div></div>
+    <div class="body">
+      <swiper :count="2">
+        <swiper-item>
+          <div class="item"></div>
+        </swiper-item>
+      </swiper>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {}
+  import swiper from '../../components/swiper/swiper';
+  import swiperItem from '../../components/swiper/swiperItem';
+
+  export default {
+    components: {
+      swiper,
+      swiperItem
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -81,6 +95,13 @@
           margin-left: 10px;
         }
       }
+    }
+  }
+  .body {
+    .item {
+      width: 750px;
+      height: 350px;
+      background-color: #dddddd;
     }
   }
 </style>
