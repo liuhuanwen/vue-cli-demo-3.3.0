@@ -3,13 +3,10 @@ import * as http from '../common/http';
 /**
  * 获取手机验证码
  * */
-export function sendMobileCode(mobile, captchaHash, captchaValue) {
+export function sendMobileCode(mobile) {
   return http.ajax('login/mobile_send_code',
     {
-      captcha_hash: captchaHash,
-      captcha_value: captchaValue,
       mobile: mobile,
-      scf: 'ms'
     }
   );
 }
@@ -28,13 +25,11 @@ export function getCaptcha(mobile) {
 /**
  * 登录
  * */
-export function login(mobile, validateToken, validateCode) {
+export function login(mobile, validateCode) {
   return http.ajax('login/login_by_mobile',
     {
-      validate_token: validateToken,
       validate_code: validateCode,
       mobile: mobile,
-      scf: 'ms'
     }
   );
 }

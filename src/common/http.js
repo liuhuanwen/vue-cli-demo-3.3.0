@@ -10,7 +10,10 @@ instance.defaults.withCredentials = true;
 
 instance.interceptors.response.use(
   res => {
-    return res;
+    if (res.data && res.data.hasOwnProperty('status') && res.data.status === 0) {
+      return Promise.reject(new Error(res.data.message));
+    }
+    return res.data;
   },
   err => {
     if (err && err.response) {
@@ -68,7 +71,7 @@ export function ajax(url, params, type = 'post') {
     config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
     config.data = qs.stringify(params);
   }
-  return instance(url, config).then(res => {
-    return res.data;
+  return instance(url, config).then(data => {
+    return data;
   })
 }

@@ -75,23 +75,12 @@
       ]),
       async handleGetMobileCode() {
         try {
-          const data = await userApi.sendMobileCode(this.mobile, this.captcha.captchaHash, this.captchaValue);
-          this.validateToken = data.validate_token;
+          await userApi.sendMobileCode(this.mobile, this.captcha.captchaHash, this.captchaValue);
           this.isShowCaptcha = false;
           this.captchaValue = '';
           this.countDown();
         } catch (err) {
-          if (err.response && err.response.status === 400) {
-            if (err.response.data.name === 'NEED_CAPTCHA') {
-              this.isShowCaptcha = true;
-              this.captchaValue = '';
-              this.handleGetCaptcha();
-            } else {
-              this.showToast(err.message);
-            }
-          } else {
-            this.showToast('获取验证码失败');
-          }
+          this.showToast(err.message);
         }
       },
       async handleGetCaptcha() {
@@ -130,15 +119,11 @@
           return;
         }
         try {
-          const data = await userApi.login(this.mobile, this.validateToken, this.validateCode);
-          this.SAVE_USER_ID(data.user_id);
+          const data = await userApi.login(this.mobile, this.validateCode);
+          this.SAVE_USER_ID(data.userId);
           this.$router.push('mine');
         } catch (err) {
-          if (err.response && err.response.status === 400) {
-            this.showToast(err.message);
-          } else {
-            this.showToast('登录失败');
-          }
+          this.showToast(err.message);
         }
       },
       handleCancel() {
