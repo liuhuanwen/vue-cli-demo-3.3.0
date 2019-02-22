@@ -12,7 +12,6 @@ module.exports = {
         // },
         onProxyRes: function(proxyRes) {
           let cookies = proxyRes.headers['set-cookie'];
-          console.log(cookies);
           const cookieRegex = /Path=\/XXX\//i;
           if (cookies) {
             let newCookie = cookies.map(function(cookie) {

@@ -49,7 +49,7 @@
         try {
           this.captcha = await userApi.getCaptcha(this.user.mobile);
         } catch (err) {
-          console.log('获取验证码失败');
+
         }
       },
       async handleGetMobileCode(captchaHash, captchaValue) {
