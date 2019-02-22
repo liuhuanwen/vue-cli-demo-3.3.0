@@ -280,31 +280,27 @@
           height: 88px;
           text-align: left;
 
+          .item-icon, .item-title, .item-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+          }
 
           .item-icon {
-            position: absolute;
             left: 32px;
             width: 36px;
             height: 36px;
-            top: 50%;
-            transform: translateY(-50%);
           }
 
           .item-title {
-            position: absolute;
             font-size: 32px;
             left: 100px;
-            top: 50%;
-            transform: translateY(-50%);
           }
 
           .item-arrow {
-            position: absolute;
             width: 32px;
             height: 32px;
             right: 32px;
-            top: 50%;
-            transform: translateY(-50%);
           }
 
           .item-bottom-line {
