@@ -8,8 +8,21 @@ instance.defaults.timeout = 30 * 1000;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 instance.defaults.withCredentials = true;
 
+instance.interceptors.request.use(req => {
+  let data = '';
+  if (req.params) {
+    data = req.params;
+  }
+  if (req.data) {
+    data = req.data;
+  }
+  console.log(req.url + ' : ' + data);
+  return req;
+});
+
 instance.interceptors.response.use(
   res => {
+    console.log(res.data);
     if (res.data && res.data.hasOwnProperty('status') && res.data.status === 0) {
       return Promise.reject(new Error(res.data.message));
     }

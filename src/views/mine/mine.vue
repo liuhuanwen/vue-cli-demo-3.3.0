@@ -5,12 +5,12 @@
         <img :src="avatar" alt="头像"/>
       </div>
       <div class="profile-wrapper">
-        <p class="username">登录/注册</p>
+        <p class="username">{{user.username ? user.username : '登录/注册'}}</p>
         <p class="mobile">
           <svg>
             <use xlink:href="#icon-mobile"></use>
           </svg>
-          <span>&nbsp;登录后享受更多特权</span>
+          <span>&nbsp;{{encryptionMobile ? encryptionMobile : '登录后享受更多特权'}}</span>
         </p>
       </div>
       <svg fill="#fff" class="arrow">
@@ -20,21 +20,21 @@
     <div class="body">
       <section>
         <a class="red-packet-wrapper">
-          <p v-if="false">
-            <span class="count">8</span>
+          <p v-if="user.gift_amount || user.gift_amount === 0">
+            <span class="count">{{user.gift_amount}}</span>
             <span class="unit">个</span>
           </p>
-          <svg v-if="true" fill="#ff5f3e" class="icon-red-packet">
+          <svg v-if="user.gift_amount === undefined" fill="#ff5f3e" class="icon-red-packet">
             <use xlink:href="#icon-red-packet"></use>
           </svg>
           <p class="title">红包</p>
         </a>
         <a class="gold-wrapper">
-          <p v-if="false">
-            <span class="count">141</span>
+          <p v-if="user.point || user.point === 0">
+            <span class="count">{{user.point}}</span>
             <span class="unit">个</span>
           </p>
-          <svg v-if="true" fill="#6ac20b" class="icon-gold">
+          <svg v-if="user.point === undefined" fill="#6ac20b" class="icon-gold">
             <use xlink:href="#icon-gold"></use>
           </svg>
           <p class="title">金币</p>
@@ -115,16 +115,24 @@
   import {mapState, mapActions} from 'vuex';
 
   export default {
-    data() {
-      return {
-        avatar: avatarImg
-      }
-    },
     computed: {
       ...mapState([
         'user',
         'userId'
-      ])
+      ]),
+      encryptionMobile() {
+        if (this.user.mobile) {
+          return this.user.mobile.substring(0, 3) + '****' + this.user.mobile.substring(7, 11);
+        }
+        return '';
+      },
+      avatar() {
+        if (this.user.avatar) {
+          return `https://fuss10.elemecdn.com/c/d9/${this.user.avatar}.jpeg`;
+        } else {
+          return avatarImg;
+        }
+      }
     },
     methods: {
       ...mapActions([
@@ -135,7 +143,9 @@
       }
     },
     mounted() {
-      this.getUserInfo(this.userId);
+      if (this.userId) {
+        this.getUserInfo(this.userId);
+      }
     }
   }
 </script>

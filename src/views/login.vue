@@ -120,7 +120,7 @@
         }
         try {
           const data = await userApi.login(this.mobile, this.validateCode);
-          this.SAVE_USER_ID(data.userId);
+          this.SAVE_USER_ID(data.user_id);
           this.$router.push('mine');
         } catch (err) {
           this.showToast(err.message);
