@@ -4,7 +4,7 @@ import * as http from '../common/http';
  * 获取手机验证码
  * */
 export function sendMobileCode(mobile) {
-  return http.ajax('login/mobile_send_code',
+  return http.ajax('eus/login/mobile_send_code',
     {
       mobile: mobile,
     }
@@ -15,7 +15,7 @@ export function sendMobileCode(mobile) {
  * 获取图形验证码
  * */
 export function getCaptcha(mobile) {
-  return http.ajax('v3/captchas',
+  return http.ajax('eus/v3/captchas',
     {
       captcha_str: mobile
     }
@@ -26,7 +26,7 @@ export function getCaptcha(mobile) {
  * 登录
  * */
 export function login(mobile, validateCode) {
-  return http.ajax('login/login_by_mobile',
+  return http.ajax('eus/login/login_by_mobile',
     {
       validate_code: validateCode,
       mobile: mobile,
@@ -38,5 +38,16 @@ export function login(mobile, validateCode) {
  * 获取用户信息
  * */
 export function getUserInfo(userId) {
-  return http.ajax(`v3/users/${userId}`);
+  return http.ajax(`eus/v3/users/${userId}`, {}, 'get');
+}
+
+/**
+ * 首页分类
+ * */
+export function getEntries(latitude, longitude) {
+  return http.ajax('shopping/v2/entries', {
+    latitude,
+    longitude
+  }, 'get');
+
 }

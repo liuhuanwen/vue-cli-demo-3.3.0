@@ -4,17 +4,17 @@ Mock.setup({
   timeout: '500-1000'
 });
 
-Mock.mock(/login\/mobile_send_code/, 'post', options => {
+Mock.mock(/mobile_send_code/, 'post', options => {
   if (options.body) {
     return {};
   }
 });
 
-Mock.mock(/login\/login_by_mobile/, 'post', {
+Mock.mock(/login_by_mobile/, 'post', {
   "user_id": 431140010
 });
 
-Mock.mock(/v3\/users/, 'post', {
+Mock.mock(/v3\/users/, 'get', {
   "avatar": "d3a3450338506d4f38d31048e4a31jpeg",
   "balance": 0,
   "brand_member_new": 0,
@@ -29,5 +29,9 @@ Mock.mock(/v3\/users/, 'post', {
   "supervip_status": 1,
   "user_id": 431140010,
   "username": "liuhuansir"
+});
+
+Mock.mock(/shopping\/v2\/entries/, 'get', {
+
 });
 
