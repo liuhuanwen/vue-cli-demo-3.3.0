@@ -32,5 +32,6 @@
     border-radius: 40px;
     padding: 12px 24px;
     color: #fff;
+    font-size: 28px;
   }
 </style>
