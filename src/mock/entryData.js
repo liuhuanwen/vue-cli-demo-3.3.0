@@ -7,7 +7,7 @@ export default [
       "business_flag": 0,
       "description": "",
       "id": 20133249,
-      "image_hash": "7\/d8\/a867c870b22bc74c87c348b75528djpeg",
+      "image_hash": "7d8a867c870b22bc74c87c348b75528djpeg",
       "is_in_serving": true,
       "is_need_bind_taobao": true,
       "is_personalized": false,

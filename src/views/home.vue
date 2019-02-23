@@ -20,5 +20,6 @@
     position: fixed;
     width: 750px;
     bottom: 0;
+    background-color: #fff;
   }
 </style>

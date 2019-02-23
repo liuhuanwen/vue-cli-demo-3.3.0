@@ -20,16 +20,33 @@
       </div>
     </div>
     <div class="body">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide food_types_container" v-for="(food, index) in foodItems" :key="index">
-            <router-link class="food-item" v-for="item in food" :key="item.position" to="login">
-              <img :src="`${baseImgUrl}/${item.image_hash}.jpeg`" :alt="item.name">
-              <span>{{item.name}}</span>
-            </router-link>
+      <swiper class="swiper" :options="swiperOption">
+        <swiper-slide class="food_types_container" v-for="(food, index) in foodItems" :key="index">
+          <router-link class="food-item" v-for="item in food" :key="item.position" to="login">
+            <img :src="`${baseImgUrl}/${item.image_hash}.jpeg`" :alt="item.name">
+            <span>{{item.name}}</span>
+          </router-link>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+      <div class="middle">
+        <div class="vip-wrapper">
+          <div class="vip">
+            <img src="../../assets/icon-vip.png" alt="会员">
+            <span class="span1">超级会员&nbsp;·&nbsp;</span>
+            <span class="span2">每月领20元红包</span>
+          </div>
+          <div class="open-vip-wrapper">
+            <div class="open-vip">
+              <span>立即开通</span>
+              <svg fill="#000" class="icon-arrow">
+                <use xlink:href="#icon-arrow-right"></use>
+              </svg>
+            </div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
+        <div class="activity"></div>
+        <div class="banner"></div>
       </div>
     </div>
   </div>
@@ -37,19 +54,27 @@
 
 <script>
   import * as userApi from '../../api/userApi'
-  import Swiper from 'swiper'
   import _ from 'lodash'
-  import 'swiper/dist/css/swiper.min.css'
   import {BASE_IMG_URL} from '../../config/env'
+  import {swiper, swiperSlide} from 'vue-awesome-swiper'
+  import 'swiper/dist/css/swiper.css'
 
   export default {
     data() {
       return {
         foodItems: [],
-        baseImgUrl: BASE_IMG_URL
+        baseImgUrl: BASE_IMG_URL,
+        swiperOption: {
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        },
       }
     },
-    components: {},
+    components: {
+      swiper,
+      swiperSlide
+    },
     methods: {
       async getEntries() {
         const data = await userApi.getEntries();
@@ -57,11 +82,6 @@
           return item.template === 'main_template';
         })[0].entries;
         this.foodItems = _.chunk(temp, 10);
-        console.log(this.foodItems);
-        new Swiper('.swiper-container', {
-          pagination: '.swiper-pagination',
-          loop: true
-        })
       }
     },
     mounted() {
@@ -128,27 +148,83 @@
   }
 
   .body {
-    .swiper-container {
+    .swiper {
       width: 750px;
-      .swiper-wrapper {
-        .food_types_container {
-          width: 750px;
-          display: flex;
-          flex-wrap: wrap;
-          .food-item {
-            width: 150px;
-            margin-top: 20px;
-            text-align: center;
-            img {
-              width: 90px;
-              height: 90px;
-            }
-            span {
-              display: block;
-              color: #666;
-            }
+      overflow-y: visible;
+
+      .food_types_container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .food-item {
+          width: 150px;
+          margin-top: 20px;
+          text-align: center;
+
+          img {
+            width: 90px;
+            height: 90px;
           }
 
+          span {
+            display: block;
+            color: #666;
+            font-size: 24px;
+          }
+        }
+      }
+
+      .swiper-pagination {
+        position: static;
+        bottom: 0;
+      }
+    }
+
+    .middle {
+
+      padding: 0 20px;
+
+      .vip-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 80px;
+        background-image: linear-gradient(90deg, #ffefc4, #f3dda0);
+        border-radius: 6px;
+        padding-left: 30px;
+        padding-right: 20px;
+
+        .vip {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 32px;
+            height: 32px;
+          }
+
+          .span1 {
+            margin-left: 10px;
+            font-size: 28px;
+          }
+
+          .span2 {
+            font-size: 24px;
+          }
+        }
+      }
+
+      .open-vip-wrapper {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 24px;
+        }
+
+        .icon-arrow {
+          width: 20px;
+          height: 20px;
         }
       }
     }
