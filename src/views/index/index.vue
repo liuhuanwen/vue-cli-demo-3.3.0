@@ -20,23 +20,52 @@
       </div>
     </div>
     <div class="body">
-      <swiper :count="2">
-        <swiper-item>
-          <div class="item"></div>
-        </swiper-item>
-      </swiper>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide food_types_container" v-for="(food, index) in foodItems" :key="index">
+            <router-link class="food-item" v-for="item in food" :key="item.position" to="login">
+              <img :src="`${baseImgUrl}/${item.image_hash}.jpeg`" :alt="item.name">
+              <span>{{item.name}}</span>
+            </router-link>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import swiper from '../../components/swiper/swiper';
-  import swiperItem from '../../components/swiper/swiperItem';
+  import * as userApi from '../../api/userApi'
+  import Swiper from 'swiper'
+  import _ from 'lodash'
+  import 'swiper/dist/css/swiper.min.css'
+  import {BASE_IMG_URL} from '../../config/env'
 
   export default {
-    components: {
-      swiper,
-      swiperItem
+    data() {
+      return {
+        foodItems: [],
+        baseImgUrl: BASE_IMG_URL
+      }
+    },
+    components: {},
+    methods: {
+      async getEntries() {
+        const data = await userApi.getEntries();
+        const temp = data.filter(item => {
+          return item.template === 'main_template';
+        })[0].entries;
+        this.foodItems = _.chunk(temp, 10);
+        console.log(this.foodItems);
+        new Swiper('.swiper-container', {
+          pagination: '.swiper-pagination',
+          loop: true
+        })
+      }
+    },
+    mounted() {
+      this.getEntries();
     }
   }
 </script>
@@ -97,11 +126,31 @@
       }
     }
   }
+
   .body {
-    .item {
+    .swiper-container {
       width: 750px;
-      height: 350px;
-      background-color: #dddddd;
+      .swiper-wrapper {
+        .food_types_container {
+          width: 750px;
+          display: flex;
+          flex-wrap: wrap;
+          .food-item {
+            width: 150px;
+            margin-top: 20px;
+            text-align: center;
+            img {
+              width: 90px;
+              height: 90px;
+            }
+            span {
+              display: block;
+              color: #666;
+            }
+          }
+
+        }
+      }
     }
   }
 </style>

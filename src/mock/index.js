@@ -1,4 +1,5 @@
 const Mock = require('mockjs');
+import entryData from './entryData';
 
 Mock.setup({
   timeout: '500-1000'
@@ -15,7 +16,7 @@ Mock.mock(/login_by_mobile/, 'post', {
 });
 
 Mock.mock(/v3\/users/, 'get', {
-  "avatar": "d3a3450338506d4f38d31048e4a31jpeg",
+  "avatar": "c\/d9\/d3a3450338506d4f38d31048e4a31jpeg",
   "balance": 0,
   "brand_member_new": 0,
   "delivery_card_expire_days": 0,
@@ -31,7 +32,5 @@ Mock.mock(/v3\/users/, 'get', {
   "username": "liuhuansir"
 });
 
-Mock.mock(/shopping\/v2\/entries/, 'get', {
-
-});
+Mock.mock(/shopping\/v2\/entries/, 'get', entryData);
 

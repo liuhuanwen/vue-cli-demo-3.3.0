@@ -113,6 +113,7 @@
 <script>
   import avatarImg from '../../assets/avatar-default.png';
   import {mapState, mapActions} from 'vuex';
+  import {BASE_IMG_URL} from '../../config/env'
 
   export default {
     computed: {
@@ -121,14 +122,14 @@
         'userId'
       ]),
       encryptionMobile() {
-        if (this.user.mobile) {
+        if (this.user&& this.user.mobile) {
           return this.user.mobile.substring(0, 3) + '****' + this.user.mobile.substring(7, 11);
         }
         return '';
       },
       avatar() {
-        if (this.user.avatar) {
-          return `https://fuss10.elemecdn.com/c/d9/${this.user.avatar}.jpeg`;
+        if (this.user && this.user.avatar) {
+          return `${BASE_IMG_URL}/${this.user.avatar}.jpeg`;
         } else {
           return avatarImg;
         }

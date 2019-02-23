@@ -9,7 +9,9 @@ Vue.use(Vuex);
 
 const state = {
   count: 0,
-  user: {},
+  user: {
+    username: ''
+  },
   userId: 0,
   toast: {
     message: '',
