@@ -6,8 +6,8 @@
           <use xlink:href="#icon-address-location"></use>
         </svg>
         <span>正在识别地址...</span>
-        <svg class="icon-address-arrow-bottom">
-          <use xlink:href="#icon-address-arrow-bottom"></use>
+        <svg fill="#fff" class="icon-address-arrow-bottom">
+          <use xlink:href="#icon-arrow-bottom"></use>
         </svg>
       </div>
     </div>
@@ -63,8 +63,27 @@
         </swiper>
       </div>
       <div class="shoplist-title">推荐商家</div>
-      <div style="background-color: darkgreen; height: 500px"></div>
     </div>
+    <div class="filter-wrapper">
+      <div class="filter">
+        <a>
+          <span>综合排序</span>
+          <svg fill="rgb(51, 51, 51)" class="icon-arrow-bottom">
+            <use xlink:href="#icon-arrow-bottom"></use>
+          </svg>
+
+        </a>
+        <a>距离最近</a>
+        <a>品质联盟</a>
+        <a>
+          <span>筛选</span>
+          <svg fill="#666" class="icon-more-filter">
+            <use xlink:href="#icon-more-filter"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <food-shop-list></food-shop-list>
   </div>
 </template>
 
@@ -74,6 +93,7 @@
   import {BASE_IMG_URL} from '../../config/env'
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import 'swiper/dist/css/swiper.css'
+  import foodShopList from '../../components/food/foodShopList'
 
   export default {
     data() {
@@ -90,13 +110,14 @@
           pagination: {
             el: '.swiper-pagination'
           },
-          autoplay:true
+          autoplay: true
         }
       }
     },
     components: {
       swiper,
-      swiperSlide
+      swiperSlide,
+      foodShopList
     },
     methods: {
       async getEntries() {
@@ -267,6 +288,7 @@
           left: 30px;
           top: 20px;
           text-align: left;
+
           h3 {
             font-size: 34px;
           }
@@ -294,6 +316,7 @@
 
       .swiper-banner {
         margin-top: 10px;
+
         .swiper-pagination {
           bottom: 0;
         }
@@ -321,6 +344,43 @@
 
     .shoplist-title:after {
       margin-left: 30px;
+    }
+  }
+
+  .filter-wrapper {
+    position: sticky;
+    top: 104px;
+    z-index: 999;
+    background-color: #fff;
+    .filter {
+      display: flex;
+      height: 72px;
+      align-items: center;
+      border-bottom: 1px solid #fef;
+
+      a {
+        display: table-cell;
+        width: 25%;
+        font-size: 28px;
+
+        span {
+          vertical-align: middle;
+        }
+
+        .icon-arrow-bottom {
+          width: 14px;
+          height: 8px;
+          margin-left: 6px;
+          vertical-align: middle;
+        }
+
+        .icon-more-filter {
+          width: 26px;
+          height: 26px;
+          margin-left: 6px;
+          vertical-align: middle;
+        }
+      }
     }
   }
 </style>

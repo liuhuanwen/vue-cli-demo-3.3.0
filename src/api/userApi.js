@@ -35,6 +35,16 @@ export function getEntries(latitude, longitude) {
   return http.ajax('shopping/v2/entries', {latitude, longitude}, 'get');
 }
 
+/**
+ * 首页轮播图
+ * */
 export function getBanners(latitude, longitude) {
   return http.ajax('/shopping/v2/banners', {latitude, longitude}, 'get')
+}
+
+/**
+ * 首页推荐餐馆列表
+ * */
+export function getRestaurants(latitude, longitude) {
+  return http.ajax('/shopping/v3/restaurants', {latitude, longitude}, 'get')
 }
