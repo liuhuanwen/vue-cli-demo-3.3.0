@@ -15,11 +15,12 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .nav-bar {
     position: fixed;
     width: 750px;
     bottom: 0;
     background-color: #fff;
+    z-index: 1000;
   }
 </style>

@@ -1,5 +1,6 @@
 const Mock = require('mockjs');
 import entryData from './entryData';
+import bannerData from './bannerData';
 
 Mock.setup({
   timeout: '500-1000'
@@ -33,4 +34,6 @@ Mock.mock(/v3\/users/, 'get', {
 });
 
 Mock.mock(/shopping\/v2\/entries/, 'get', entryData);
+
+Mock.mock(/shopping\/v2\/banners/, 'get', bannerData);
 

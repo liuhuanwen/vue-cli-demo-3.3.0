@@ -10,13 +10,13 @@
           <use xlink:href="#icon-address-arrow-bottom"></use>
         </svg>
       </div>
-      <div class="search-wrapper">
-        <div class="search">
-          <svg class="icon-search">
-            <use xlink:href="#icon-search"></use>
-          </svg>
-          <span>搜索饿了么商家、商品名称</span>
-        </div>
+    </div>
+    <div class="search-wrapper">
+      <div class="search">
+        <svg class="icon-search">
+          <use xlink:href="#icon-search"></use>
+        </svg>
+        <span>搜索饿了么商家、商品名称</span>
       </div>
     </div>
     <div class="body">
@@ -45,9 +45,25 @@
             </div>
           </div>
         </div>
-        <div class="activity"></div>
-        <div class="banner"></div>
+        <div class="activity-wrapper">
+          <div class="activity-text">
+            <h3>品质套餐</h3>
+            <span>搭配齐全吃得好</span>
+            <span class="span">立即抢购></span>
+          </div>
+          <img src="../../assets/icon-activity.png" alt="">
+        </div>
+        <swiper class="swiper-banner" :options="swiperBannerOption">
+          <swiper-slide v-for="(banner, index) in bannerItems" :key="index">
+            <router-link to="login">
+              <img :src="`${baseImgUrl}/${banner.image_hash}.jpeg`" alt="">
+            </router-link>
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
       </div>
+      <div class="shoplist-title">推荐商家</div>
+      <div style="background-color: darkgreen; height: 500px"></div>
     </div>
   </div>
 </template>
@@ -69,6 +85,13 @@
             el: '.swiper-pagination'
           }
         },
+        bannerItems: [],
+        swiperBannerOption: {
+          pagination: {
+            el: '.swiper-pagination'
+          },
+          autoplay:true
+        }
       }
     },
     components: {
@@ -82,10 +105,14 @@
           return item.template === 'main_template';
         })[0].entries;
         this.foodItems = _.chunk(temp, 10);
+      },
+      async getBanners() {
+        this.bannerItems = await userApi.getBanners();
       }
     },
     mounted() {
       this.getEntries();
+      this.getBanners();
     }
   }
 </script>
@@ -119,30 +146,31 @@
         margin-left: 10px;
       }
     }
+  }
 
-    .search-wrapper {
-      position: sticky;
-      top: 0;
-      padding: 16px 28px;
-      background-image: linear-gradient(90deg, #0af, #0085ff);
+  .search-wrapper {
+    position: sticky;
+    top: 0;
+    padding: 16px 28px;
+    z-index: 999;
+    background-image: linear-gradient(90deg, #0af, #0085ff);
 
-      .search {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 72px;
-        background-color: #fff;
+    .search {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 72px;
+      background-color: #fff;
 
-        .icon-search {
-          width: 32px;
-          height: 32px;
-        }
+      .icon-search {
+        width: 32px;
+        height: 32px;
+      }
 
-        span {
-          font-size: 28px;
-          color: #999;
-          margin-left: 10px;
-        }
+      span {
+        font-size: 28px;
+        color: #999;
+        margin-left: 10px;
       }
     }
   }
@@ -181,8 +209,7 @@
     }
 
     .middle {
-
-      padding: 0 20px;
+      padding: 0 20px 20px 20px;
 
       .vip-wrapper {
         display: flex;
@@ -227,6 +254,73 @@
           height: 20px;
         }
       }
+
+      .activity-wrapper {
+        position: relative;
+        margin-top: 10px;
+        height: 220px;
+        background-color: #f8f8f8;
+        border-radius: 6px;
+
+        .activity-text {
+          position: absolute;
+          left: 30px;
+          top: 20px;
+          text-align: left;
+          h3 {
+            font-size: 34px;
+          }
+
+          span {
+            display: block;
+            font-size: 28px;
+            color: #666;
+          }
+
+          .span {
+            font-size: 24px;
+            color: #af8260;
+            margin-top: 10px;
+          }
+        }
+
+        img {
+          position: absolute;
+          width: 282px;
+          right: 30px;
+          top: 20px;
+        }
+      }
+
+      .swiper-banner {
+        margin-top: 10px;
+        .swiper-pagination {
+          bottom: 0;
+        }
+      }
+    }
+
+    .shoplist-title {
+      font-size: 30px;
+      line-height: 72px;
+      height: 72px;
+    }
+
+    .shoplist-title:before, .shoplist-title:after {
+      display: inline-block;
+      content: "";
+      width: 60px;
+      height: 1px;
+      background-color: #999;
+      vertical-align: middle;
+    }
+
+    .shoplist-title:before {
+      margin-right: 30px;
+    }
+
+    .shoplist-title:after {
+      margin-left: 30px;
     }
   }
 </style>
