@@ -18,7 +18,7 @@ Mock.mock(/login_by_mobile/, 'post', {
 });
 
 Mock.mock(/v3\/users/, 'get', {
-  "avatar": "c\/d9\/d3a3450338506d4f38d31048e4a31jpeg",
+  "avatar": "c/d9/d3a3450338506d4f38d31048e4a31jpeg",
   "balance": 0,
   "brand_member_new": 0,
   "delivery_card_expire_days": 0,
