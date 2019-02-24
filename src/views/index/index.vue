@@ -83,7 +83,7 @@
         </a>
       </div>
     </div>
-    <food-shop-list></food-shop-list>
+    <food-shop-list :food-shop-list="restaurantItems" :loading="loadingMoreRestaurant"></food-shop-list>
   </div>
 </template>
 
@@ -94,6 +94,7 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import 'swiper/dist/css/swiper.css'
   import foodShopList from '../../components/food/foodShopList'
+  import {isReachBottom} from '../../common/util'
 
   export default {
     data() {
@@ -111,13 +112,25 @@
             el: '.swiper-pagination'
           },
           autoplay: true
-        }
+        },
+        restaurantItems: [],
+        hasNext: false,
+        loadingMoreRestaurant: false
       }
     },
     components: {
       swiper,
       swiperSlide,
       foodShopList
+    },
+    watch: {
+      loadingMoreRestaurant(newValue) {
+        if (newValue) {
+          window.removeEventListener('scroll', this.handleMore, true);
+        } else {
+          window.addEventListener('scroll', this.handleMore, true);
+        }
+      }
     },
     methods: {
       async getEntries() {
@@ -129,11 +142,26 @@
       },
       async getBanners() {
         this.bannerItems = await userApi.getBanners();
+      },
+      async getRestaurants() {
+        const data = await userApi.getRestaurants();
+        this.restaurantItems.push(...data.items);
+        this.loadingMoreRestaurant = false;
+        this.hasNext = data.has_next;
+      },
+      handleMore() {
+        this.loadingMoreRestaurant = isReachBottom() && this.hasNext;
+        if (this.loadingMoreRestaurant) {
+          this.getRestaurants();
+        }
       }
     },
     mounted() {
+      this.restaurantItems = [];
       this.getEntries();
       this.getBanners();
+      this.getRestaurants();
+      window.addEventListener('scroll', this.handleMore, true);
     }
   }
 </script>

@@ -59,6 +59,12 @@
   import {RATE_GRAY, RATE_ACTIVED} from '../../config/base64Image'
 
   export default {
+    props: {
+      foodShop: {
+        type: Object,
+        required: true
+      }
+    },
     data() {
       return {
         rateGrayImage: RATE_GRAY,

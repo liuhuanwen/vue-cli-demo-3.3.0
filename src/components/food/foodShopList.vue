@@ -1,7 +1,7 @@
 <template>
   <ul>
-    <li is="food-shop-item"></li>
-    <li v-if="true" class="loading">
+    <li is="food-shop-item" v-for="(foodShop, index) in foodShopList" :key="index" :foodShop="foodShop.restaurant"></li>
+    <li v-if="loading" class="loading">
       <div class="span-wrapper">
         <span>正在加载...</span>
       </div>
@@ -14,6 +14,16 @@
   import foodShopItem from './foodShopItem'
 
   export default {
+    props: {
+      foodShopList: {
+        type: Array,
+        required: true
+      },
+      loading: {
+        type: Boolean,
+        required: false
+      }
+    },
     components: {
       foodShopItem
     }
