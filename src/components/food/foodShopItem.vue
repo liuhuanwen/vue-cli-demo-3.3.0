@@ -1,10 +1,10 @@
 <template>
   <div class="item-wrapper">
     <div class="shop-info">
-      <img src="../../assets/avatar-default.png" alt="">
+      <customImage class="image" :img="shopLogo"></customImage>
       <div class="main">
         <section class="shop-name">
-          <span class="span-left">谭江麻辣香锅</span>
+          <span class="span-left">{{foodShop.name}}</span>
           <span class="span-right">···</span>
         </section>
         <section class="shop-rate">
@@ -13,35 +13,30 @@
               <div class="rate-gray">
                 <img :src="rateGrayImage" alt="">
               </div>
-              <div class="rate-actived">
+              <div class="rate-actived" :style="{width: `${foodShop.rating / 5 * 100}%`}">
                 <img :src="rateActivedImage" alt="">
               </div>
             </div>
-            <span>4.1</span>
-            <span>月售696单</span>
+            <span>{{foodShop.rating}}</span>
+            <span>月售{{foodShop.recent_order_num}}单</span>
           </div>
-          <span class="span-right">蜂鸟专送</span>
+          <span v-show="foodShop.delivery_mode" class="span-right">蜂鸟专送</span>
         </section>
         <section class="shop-money-distance">
-          <span class="money-limit">¥20起送 | 配送费¥2.5</span>
-          <span class="distance-time">1.51km | 40分钟</span>
+          <span class="money-limit">¥{{foodShop.float_minimum_order_amount}}起送 | 配送费¥{{foodShop.float_delivery_fee}}</span>
+          <span class="distance-time">{{shopDistance}} | {{foodShop.float_minimum_order_amount}}分钟</span>
         </section>
       </div>
     </div>
     <div class="activity-wrapper">
       <div class="tag">
-        <span>香锅砂锅</span>
-        <span>品质联盟</span>
+        <span v-for="item in foodShop.flavors">{{item.name}}</span>
       </div>
       <div class="activity-list-wrapper">
         <div class="activity-list">
-          <div class="activity-item">
-            <span class="icon">减</span>
-            <span class="content">满28减17，满48减23，满68减28</span>
-          </div>
-          <div class="activity-item">
-            <span class="icon">减</span>
-            <span class="content">满28减17，满48减23，满68减28</span>
+          <div class="activity-item" v-for="item in foodShop.activities">
+            <span class="icon">{{item.icon_name}}</span>
+            <span class="content">{{item.tips}}</span>
           </div>
         </div>
         <div class="activity-count">
@@ -57,6 +52,9 @@
 
 <script>
   import {RATE_GRAY, RATE_ACTIVED} from '../../config/base64Image'
+  import {BASE_IMG_URL} from '../../config/env'
+  import customImage from '../../components/customImage'
+  import {getFullImageName, formatDistance} from '../../common/util'
 
   export default {
     props: {
@@ -70,6 +68,17 @@
         rateGrayImage: RATE_GRAY,
         rateActivedImage: RATE_ACTIVED
       }
+    },
+    components: {
+      customImage
+    },
+    computed: {
+      shopLogo() {
+        return `${BASE_IMG_URL}/${getFullImageName(this.foodShop.image_path)}`;
+      },
+      shopDistance() {
+        return formatDistance(this.foodShop.distance);
+      }
     }
   }
 </script>
@@ -82,7 +91,7 @@
     .shop-info {
       display: flex;
 
-      img {
+      .image {
         width: 130px;
         height: 130px;
         border-radius: 4px;
@@ -128,16 +137,17 @@
 
               .rate-gray, .rate-actived {
                 display: flex;
-                justify-content: center;
 
                 img {
-                  height: 20px;
                   width: 112px;
+                  height: 20px;
+                  max-width: 112px;
                 }
               }
 
               .rate-actived {
                 position: absolute;
+                overflow: hidden;
                 top: 0;
                 left: 0;
               }
@@ -209,6 +219,8 @@
 
             .content {
               margin-left: 8px;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }

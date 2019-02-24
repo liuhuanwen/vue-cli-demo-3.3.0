@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header" @click="handleClickHeader()">
       <div class="avatar-wrapper">
-        <img :src="avatar" alt="头像"/>
+        <customImage class="image" :img="avatar"></customImage>
       </div>
       <div class="profile-wrapper">
         <p class="username">{{user.username ? user.username : '登录/注册'}}</p>
@@ -111,11 +111,14 @@
 </template>
 
 <script>
-  import avatarImg from '../../assets/avatar-default.png';
   import {mapState, mapActions} from 'vuex';
   import {BASE_IMG_URL} from '../../config/env'
+  import customImage from '../../components/customImage'
 
   export default {
+    components: {
+      customImage
+    },
     computed: {
       ...mapState([
         'user',
@@ -130,9 +133,8 @@
       avatar() {
         if (this.user && this.user.avatar) {
           return `${BASE_IMG_URL}/${this.user.avatar}.jpeg`;
-        } else {
-          return avatarImg;
         }
+        return '';
       }
     },
     methods: {
@@ -169,8 +171,9 @@
         width: 120px;
         height: 120px;
 
-        img {
+        .image {
           width: 100%;
+          height: 100%;
           border-radius: 50%;
         }
       }

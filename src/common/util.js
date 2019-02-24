@@ -27,3 +27,32 @@ export function isReachBottom () {
   const scrollHeight = getScrollHeight(); // 获取文档总高度
   return scrollTop >= parseInt(scrollHeight) - winHeight
 }
+
+/**
+ * 获取图片的全名称，包括后缀名
+ * */
+export function getFullImageName(imageName) {
+  if (imageName) {
+    if (imageName.endsWith('png')) {
+      return imageName + '.png';
+    }
+    if (imageName.endsWith('jpeg')) {
+      return imageName + '.jpeg';
+    }
+  } else {
+    return '';
+  }
+}
+
+/**
+ * 格式化距离，km m
+ * */
+export function formatDistance(distance) {
+  if (distance < 0) {
+    return '0m';
+  }
+  if (distance < 1000) {
+    return distance + 'm';
+  }
+  return (distance / 1000).toFixed(2) + 'km';
+}
