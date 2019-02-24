@@ -1,8 +1,8 @@
 <template>
   <ul>
     <li is="food-shop-item" v-for="(foodShop, index) in foodShopList" :key="index" :foodShop="foodShop.restaurant"></li>
-    <li v-if="loading" class="loading">
-      <div class="span-wrapper">
+    <li class="loading">
+      <div v-if="loading" class="span-wrapper">
         <span>正在加载...</span>
       </div>
       <div class="placeholder"></div>
@@ -21,7 +21,8 @@
       },
       loading: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
       }
     },
     components: {
