@@ -4,7 +4,7 @@ import bannerData from './bannerData';
 import restaurantData from './restaurantData';
 
 Mock.setup({
-  timeout: '1000-1500'
+  timeout: '600-1000'
 });
 
 Mock.mock(/mobile_send_code/, 'post', options => {

@@ -23,7 +23,8 @@
           <span v-show="foodShop.delivery_mode" class="span-right">蜂鸟专送</span>
         </section>
         <section class="shop-money-distance">
-          <span class="money-limit">¥{{foodShop.float_minimum_order_amount}}起送 | 配送费¥{{foodShop.float_delivery_fee}}</span>
+          <span
+              class="money-limit">¥{{foodShop.float_minimum_order_amount}}起送 | 配送费¥{{foodShop.float_delivery_fee}}</span>
           <span class="distance-time">{{shopDistance}} | {{foodShop.float_minimum_order_amount}}分钟</span>
         </section>
       </div>
@@ -34,14 +35,15 @@
       </div>
       <div class="activity-list-wrapper">
         <div class="activity-list">
-          <div class="activity-item" v-for="item in foodShop.activities">
-            <span class="icon">{{item.icon_name}}</span>
-            <span class="content">{{item.tips}}</span>
+          <div class="activity-item" v-for="(item, index) in activities" v-if="index < 2 || isShowMoreActivities">
+            <span class="icon" :style="{backgroundColor: `#${item.icon_color}`}">{{item.icon_name}}</span>
+            <span class="content">{{item.description}}</span>
           </div>
         </div>
-        <div class="activity-count">
-          <span>7个活动</span>
-          <svg class="icon-arrow-bottom" fill="rgb(153, 153, 153)">
+        <div v-if="activities.length > 2" class="activity-count" @click="handleShowMoreActivities()">
+          <span>{{activities.length}}个活动</span>
+          <svg class="icon-arrow-bottom" :class="{'icon-arrow-bottom-transform': isShowMoreActivities}"
+               fill="rgb(153, 153, 153)">
             <use xlink:href="#icon-arrow-bottom"></use>
           </svg>
         </div>
@@ -66,7 +68,8 @@
     data() {
       return {
         rateGrayImage: RATE_GRAY,
-        rateActivedImage: RATE_ACTIVED
+        rateActivedImage: RATE_ACTIVED,
+        isShowMoreActivities: false
       }
     },
     components: {
@@ -78,6 +81,14 @@
       },
       shopDistance() {
         return formatDistance(this.foodShop.distance);
+      },
+      activities() {
+        return [...this.foodShop.activities, ...this.foodShop.supports];
+      }
+    },
+    methods: {
+      handleShowMoreActivities() {
+        this.isShowMoreActivities = !this.isShowMoreActivities;
       }
     }
   }
@@ -198,16 +209,20 @@
 
       .activity-list-wrapper {
         display: flex;
-        flex-grow: 1;
+        flex: 1;
         justify-content: space-between;
         margin-top: 30px;
 
         .activity-list {
+          display: flex;
+          flex-direction: column;
+          margin-right: 10px;
+          overflow: hidden;
+
           .activity-item {
             display: flex;
-            align-items: center;
             font-size: 22px;
-            margin-bottom: 14px;
+            margin-bottom: 7px;
 
             .icon {
               background-color: rgb(0, 151, 255);
@@ -218,22 +233,35 @@
             }
 
             .content {
+              display: inline-block;
               margin-left: 8px;
               overflow: hidden;
               text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }
 
         .activity-count {
+          width: 160px;
+          text-align: right;
+
           span {
             font-size: 22px;
+            vertical-align: middle;
           }
 
           .icon-arrow-bottom {
             width: 14px;
             height: 8px;
             margin-left: 6px;
+            vertical-align: middle;
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+          }
+
+          .icon-arrow-bottom-transform {
+            transform: rotate(180deg);
           }
         }
       }
