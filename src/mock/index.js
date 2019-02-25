@@ -2,6 +2,7 @@ const Mock = require('mockjs');
 import entryData from './entryData';
 import bannerData from './bannerData';
 import restaurantData from './restaurantData';
+import sortFilterData from './sortFilterData';
 
 Mock.setup({
   timeout: '600-1000'
@@ -39,4 +40,6 @@ Mock.mock(/shopping\/v2\/entries/, 'get', entryData);
 Mock.mock(/shopping\/v2\/banners/, 'get', bannerData);
 
 Mock.mock(/shopping\/v3\/restaurants/, 'get', restaurantData);
+
+Mock.mock(/shopping\/restaurants\/batch_filter/, 'get', sortFilterData);
 

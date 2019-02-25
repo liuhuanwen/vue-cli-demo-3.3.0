@@ -65,23 +65,7 @@
       <div class="shoplist-title">推荐商家</div>
     </div>
     <div class="filter-wrapper">
-      <div class="filter">
-        <a>
-          <span>综合排序</span>
-          <svg fill="rgb(51, 51, 51)" class="icon-arrow-bottom">
-            <use xlink:href="#icon-arrow-bottom"></use>
-          </svg>
-
-        </a>
-        <a>距离最近</a>
-        <a>品质联盟</a>
-        <a>
-          <span>筛选</span>
-          <svg fill="#666" class="icon-more-filter">
-            <use xlink:href="#icon-more-filter"></use>
-          </svg>
-        </a>
-      </div>
+      <shop-sort></shop-sort>
     </div>
     <food-shop-list :food-shop-list="restaurantItems" :loading="loadingMoreRestaurant"></food-shop-list>
   </div>
@@ -94,7 +78,8 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import 'swiper/dist/css/swiper.css'
   import foodShopList from '../../components/food/foodShopList'
-  import {isReachBottom} from '../../common/util'
+  import {isReachBottom, getScrollTop} from '../../common/util'
+  import shopSort from '../../components/shopSort'
 
   export default {
     data() {
@@ -115,13 +100,16 @@
         },
         restaurantItems: [],
         hasNext: false,
-        loadingMoreRestaurant: false
+        loadingMoreRestaurant: false,
+        scrollTopBeforeSort: 1500,
+        scrollTopAfterSort: 750
       }
     },
     components: {
       swiper,
       swiperSlide,
-      foodShopList
+      foodShopList,
+      shopSort
     },
     watch: {
       loadingMoreRestaurant(newValue) {
@@ -149,13 +137,25 @@
         this.loadingMoreRestaurant = false;
         this.hasNext = data.has_next;
       },
+      // 商家列表加载更多
       handleMore() {
         this.loadingMoreRestaurant = isReachBottom() && this.hasNext;
         if (this.loadingMoreRestaurant) {
           this.getRestaurants();
         }
+      },
+      // 距离最近排序
+      async handleDistanceNearSort() {
+        let currentScrollTop = getScrollTop();
+        this.restaurantItems = [];
+        await this.getRestaurants();
+        window.scrollTo(0, currentScrollTop);
+      },
+      // 品质联盟排序
+      async handleGoodSort() {
+        this.handleDistanceNearSort();
       }
-    },
+  },
     mounted() {
       this.restaurantItems = [];
       this.getEntries();
@@ -380,35 +380,5 @@
     top: 104px;
     z-index: 999;
     background-color: #fff;
-    .filter {
-      display: flex;
-      height: 72px;
-      align-items: center;
-      border-bottom: 1px solid #fef;
-
-      a {
-        display: table-cell;
-        width: 25%;
-        font-size: 28px;
-
-        span {
-          vertical-align: middle;
-        }
-
-        .icon-arrow-bottom {
-          width: 14px;
-          height: 8px;
-          margin-left: 6px;
-          vertical-align: middle;
-        }
-
-        .icon-more-filter {
-          width: 26px;
-          height: 26px;
-          margin-left: 6px;
-          vertical-align: middle;
-        }
-      }
-    }
   }
 </style>

@@ -48,3 +48,10 @@ export function getBanners(latitude, longitude) {
 export function getRestaurants(latitude, longitude) {
   return http.ajax('/shopping/v3/restaurants', {latitude, longitude}, 'get')
 }
+
+/**
+ * 首页排序和过滤条件
+ * */
+export function getSortFilters(latitude, longitude) {
+  return http.ajax('/shopping/restaurants/batch_filter', {latitude, longitude}, 'get')
+}
