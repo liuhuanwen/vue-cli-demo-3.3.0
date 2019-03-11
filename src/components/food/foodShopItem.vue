@@ -31,11 +31,11 @@
     </div>
     <div class="activity-wrapper">
       <div class="tag">
-        <span v-for="item in foodShop.flavors">{{item.name}}</span>
+        <span v-for="(item, index) in foodShop.flavors" :key="index">{{item.name}}</span>
       </div>
       <div class="activity-list-wrapper">
         <div class="activity-list">
-          <div class="activity-item" v-for="(item, index) in activities" v-if="index < 2 || isShowMoreActivities">
+          <div class="activity-item" v-for="(item, index) in activities" v-if="index < 2 || isShowMoreActivities" :key="index">
             <span class="icon" :style="{backgroundColor: `#${item.icon_color}`}">{{item.icon_name}}</span>
             <span class="content">{{item.description}}</span>
           </div>

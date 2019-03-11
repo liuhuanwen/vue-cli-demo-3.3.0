@@ -55,7 +55,7 @@
           <dt>优惠活动(单选)</dt>
           <dd>
             <div class="item-wrapper">
-              <div class="item" v-for="(activity, index) in sortFilterData.activityTypes">
+              <div class="item" v-for="(activity, index) in sortFilterData.activityTypes" :key="index">
                 {{activity.name}}
               </div>
             </div>
